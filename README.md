@@ -1,4 +1,4 @@
-![MUD 2](img/MUD.PNG)
+![MUD 2](MUD.PNG)
 
 ### Instructions to run existing files:
 If using Yarn:
@@ -24,4 +24,4 @@ yarn start
 ```
 
 
-![MUD 1](img/dungeongame.gif)
+![MUD 1](dungeongame.gif)
