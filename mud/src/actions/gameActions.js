@@ -20,7 +20,7 @@ import {
 export const init = () => dispatch => {
   dispatch({ type: INIT_START });
   return axiosWithAuth()
-  .get(`http://mud-03-02.herokuapp.com/api/adv/init`)
+  .get(`https://mud-back-end2.herokuapp.com/api/adv/init`)
   .then(res => {
       console.log(res)
 
@@ -40,15 +40,17 @@ export const init = () => dispatch => {
 
 //MOVE
 export const move = direction => dispatch => {
+  console.log(direction)
     dispatch({type: MOVE_START});
     return axiosWithAuth()
-        .post('http://mud-03-02.herokuapp.com/api/adv/move/',  direction )
+        .post('https://mud-back-end2.herokuapp.com/api/adv/move/',  direction )
         .then(response => {
           console.log(response)
             dispatch({type: MOVE_SUCCESS, payload:response.data});
         })
         .catch(err => {
-            dispatch({ type: MOVE_FAILURE, payload: err.response.data });
+          console.log(err)
+            dispatch({ type: MOVE_FAILURE, payload: err });
           });
 }
 
@@ -56,7 +58,7 @@ export const move = direction => dispatch => {
 export const getRooms = () => dispatch => {
     dispatch({type: GET_ROOMS_START});
     return axiosWithAuth()
-      .get('http://mud-03-02.herokuapp.com/api/adv/getallrooms')
+      .get('https://mud-back-end2.herokuapp.com/api/adv/make_grid/')
       .then(response => {
         dispatch({ type: GET_ROOMS_SUCCESS, payload: response.data });
       })

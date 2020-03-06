@@ -18,7 +18,7 @@ function World(props) {
     useEffect(() => {
         axios
             .get(
-                `https://multi-user-dungeon-lambda.herokuapp.com/api/adv/getallrooms`
+                `https://mud-back-end2.herokuapp.com/api/adv/make_grid`
             )
             .then(res => {
                 const rooms = res.data.rooms;

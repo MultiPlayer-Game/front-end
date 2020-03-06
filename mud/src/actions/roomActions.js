@@ -56,7 +56,7 @@ export const getAllRooms = () => dispatch => {
    
     dispatch({ type: GET_ROOMS_START });
         return axiosWithAuth()
-        .get(`http://mud-03-02.herokuapp.com/api/adv/getallrooms`)
+        .get(`'https://mud-back-end2.herokuapp.com/api/adv/make_grid`)
         .then(res => {
             console.log(res)
 

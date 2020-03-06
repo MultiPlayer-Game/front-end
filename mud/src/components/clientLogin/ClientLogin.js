@@ -20,7 +20,6 @@ const ClientLogin = props => {
 
 
     const handleChange = e => {
-        console.log('hi')
         setCreds({ ...creds, [e.target.name]: e.target.value });
     };
 

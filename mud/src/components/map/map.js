@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Moving from '../clientMovement/Moving'
 import styled from "styled-components";
 import store from "../../store"
+import lineSeries from "react-vis/dist/plot/series/line-series";
 
 const StyledMap = styled.div`
     margin: 0 auto;
@@ -17,7 +18,7 @@ const StyledMap = styled.div`
 
 const Map = (props) => {
     const state = useSelector(state => state.game);
-    console.log("state",state)
+   
     
     
         // Create arrays to hold point coordinates and links
@@ -26,27 +27,65 @@ const Map = (props) => {
         const coordinates = [];
       
         const links = [];
+        const line = []
        
         const room_data = props.roomData;
-      
+        room_data.map( room =>{
+       
+            coordinates.push( {x:room.x, y:room.y})
+            for (let [key, value] of Object.entries(room)) {
+                
+                if (key === "e_to" || key ==="n_to"|| key === "w_to" || key ==="s_to"){
+                    if(value !== 0){
+                    
+                        room_data.map(item =>{
+                            
+                            if (item.id === value){
+                                links.push(item.id)
+                                
+                            }
+                        })
+                    }
+                    
+                }
+                
+                
+              }
+                
+             
+           
+        })
+        links.sort()
+        links.map(item =>{
+            room_data.map( x =>{
+                if(x.id ===item) {
+                    line.push({x:x.x, y:x.y})
+                }
+            })
+        })
+        console.log(line)
+       
+
         // const currentRoom = store.getState().player.position;
        
         
         // Loop through each room in the room_data object
-        for (let room in room_data) {
-            // Set data equal to the first element (x, y coordinates)
-            // in each room of the room_data object
-            let data = room_data[room][0];
+        // for (let room in room_data) {
+        //     // Set data equal to the first element (x, y coordinates)
+        //     // in each room of the room_data object
+        //     // let data = (room_data.x, room_data.y);
             
-            coordinates.push(data);
-            for (let adjacentRoom in room_data[room][1]) {
-                links.push([
-                    room_data[room][0],
-                    room_data[room_data[room][1][adjacentRoom]][0]
-                ]);
+        //     // coordinates.push(data);
+        //     // for (let adjacentRoom in room_data) {
+        //     //     links.push([
+        //     //         room_data[room][0],
+        //     //         room_data[room_data[room][1][adjacentRoom]][0]
+        //     //     ]);
                
-            }
-        }
+        //     // }
+        //     console.log(room)
+        // }
+
 
         return (
             <StyledMap>
@@ -71,15 +110,15 @@ const Map = (props) => {
                         style={{ cursor: "pointer" }}
                     />
 
-                    {links.map(link => (
-                        console.log(link),
+                    
+                        
                         <LineSeries
                             strokeWidth="2"
                             color="#F39C12"
-                            data={link}
+                            data={line}
                             // key={Math.random() * 100}
                         />
-                    ))}
+                
                 </FlexibleXYPlot>
                 <Moving />
             </StyledMap>
